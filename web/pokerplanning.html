@@ -1,24 +1,36 @@
 <!DOCTYPE html>
 
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PokerPlanning</title>
-    
+    <title>Poker Planning</title>
+
     <script async type="application/dart" src="pokerplanning.dart"></script>
     <script async src="packages/browser/dart.js"></script>
-    
-    <link rel="stylesheet" href="pokerplanning.css">
-  </head>
-  <body>
-    <h1>PokerPlanning</h1>
-    
-    <p>Hello world from Dart!</p>
-    
-    <div id="sample_container_id">
-      <p id="sample_text_id">Click me!</p>
-    </div>
 
-  </body>
+    <link rel="stylesheet" href="pokerplanning.css">
+</head>
+<body>
+<h1>PokerPlanning</h1>
+
+<div id="login">
+    <p>Please sign in</p>
+
+    <label for="nameInput">Name:<input id="nameInput"></label>
+    <button id="loginButton">Sign in</button>
+</div>
+
+<div class="hidden" id="loggedIn">You are logged in as <span id="nameSpan"></span></div>
+
+<div class="hidden" id="game">
+    <div id="othersCards">
+        Others cards
+    </div>
+    <div id="myCards">
+        My cards
+    </div>
+</div>
+
+</body>
 </html>
