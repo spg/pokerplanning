@@ -29,9 +29,22 @@ h1, p {
 }
 
 .hidden {
-  visibility: hidden;
+  display: none;
 }
 
-.visible {
-  visibility: visible;
+.card {
+  width: 50px;
+  height: 65px;
+  border: solid black 1px;
+  margin: 5px;
+  display: inline-block;
+  user-select: none;
+}
+
+.selected {
+  background-color: yellowgreen;
+}
+
+#myCards {
+  width: auto;
 }

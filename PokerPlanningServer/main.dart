@@ -1,7 +1,8 @@
 import 'dart:io';
 import 'dart:convert';
 
-Map<String, String> game = {};
+Map<String, String> game = {
+};
 var allConnections = [];
 
 printGame() {
@@ -15,19 +16,30 @@ void handleMessage(socket, message) {
   Map json = JSON.decode(message);
 
   var login = json["login"];
+  var cardSelection = json["cardSelection"];
+  var reveal = json["revealAll"];
 
   if (login != null) {
+    print("Adding $login to the logged in users");
     game.putIfAbsent(login, () => "");
-    broadcastGame();
+    broadcastGame(false);
+  } else if (cardSelection != null) {
+    var playerName = cardSelection[0];
+    var selectedCard = cardSelection[1];
+    print("Adding $playerName card selection: $selectedCard.");
+    game[playerName] = selectedCard;
+  } else if (reveal != null) {
+    broadcastGame(true);
   }
 
   printGame();
 }
 
-void broadcastGame() {
+void broadcastGame(bool reveal) {
   var encodedGame = {
-      "game": game
+      (reveal ? "revealedGame" : "game"): game
   };
+
   allConnections.forEach((s) => s.add(JSON.encode(encodedGame)));
 }
 
