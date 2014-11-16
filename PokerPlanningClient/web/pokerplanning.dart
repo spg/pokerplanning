@@ -18,11 +18,30 @@ void hideLoginForm() {
 
 void showLoginSuccessful() {
   querySelector("#nameSpan").text = myName;
-  querySelector("#loggedIn").classes.toggle("hidden");
+  querySelector("#loggedIn").classes.toggle("hidden", true);
 }
 
 void showGame() {
-  querySelector("#game").classes.toggle("hidden");
+  querySelector("#game").classes.toggle("hidden", false);
+  querySelector("#myCards")
+    ..append(createCard("1"))
+    ..append(createCard("2"))
+    ..append(createCard("3"));
+}
+
+void selectCard(Event e) {
+  Element card = e.target;
+  querySelectorAll(".card").forEach((c) => c.classes.toggle("selected", false));
+  card.classes.toggle("selected");
+  ws.send(JSON.encode({"cardSelection": [myName, card.id]}));
+}
+
+DivElement createCard(String value) {
+  return new DivElement()
+    ..setAttribute("id", value)
+    ..setInnerHtml(value)
+    ..classes.add("card")
+    ..onClick.listen(selectCard);
 }
 
 void login(MouseEvent e) {

@@ -15,10 +15,17 @@ void handleMessage(socket, message) {
   Map json = JSON.decode(message);
 
   var login = json["login"];
+  var cardSelection = json["cardSelection"];
 
   if (login != null) {
+    print("Adding $login to the logged in users");
     game.putIfAbsent(login, () => "");
     broadcastGame();
+  } else if (cardSelection != null) {
+    var playerName = cardSelection[0];
+    var selectedCard = cardSelection[1];
+    print("Adding $playerName card selection: $selectedCard.");
+    game[playerName] = selectedCard;
   }
 
   printGame();
