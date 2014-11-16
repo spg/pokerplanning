@@ -5,11 +5,10 @@ import 'card.dart';
 
 Map<String, String> players = {
 };
-String myName;
+Storage localStorage = window.localStorage;
 WebSocket ws;
 
 void main() {
-  querySelector("#loginButton").onClick.listen(login);
   initWebSocket();
 }
 
@@ -18,8 +17,8 @@ void hideLoginForm() {
 }
 
 void showLoginSuccessful() {
-  querySelector("#nameSpan").text = myName;
-  querySelector("#loggedIn").classes.toggle("hidden", true);
+  querySelector("#nameSpan").text = getMyName();
+  querySelector("#loggedIn").classes.toggle("hidden", false);
 }
 
 void showGame() {
@@ -60,18 +59,24 @@ void selectCard(Event e) {
   querySelectorAll(".card :first-child").forEach((c) => c.classes.toggle("selected", false));
   card.classes.toggle("selected");
   ws.send(JSON.encode({
-      "cardSelection": [myName, card.id]
+      "cardSelection": [getMyName(), card.id]
   }));
 }
 
-void login(MouseEvent e) {
+void handleLoginClick(MouseEvent e) {
   InputElement nameInput = querySelector("#nameInput");
-  myName = nameInput.value;
+  String myName = nameInput.value;
 
   if (myName.isEmpty) return;
 
+  setMyName(myName);
+
+  onUserExists();
+}
+
+onUserExists() {
   var loginInfo = {
-      'login' : myName
+      'login' : getMyName()
   };
 
   ws.send(JSON.encode(loginInfo));
@@ -85,15 +90,23 @@ outputMsg(String msg) {
   print(msg);
 }
 
+onSocketOpen(event) {
+  outputMsg('Connected');
+
+  if (getMyName() == null) {
+    querySelector("#loginButton").onClick.listen(handleLoginClick);
+  } else {
+    onUserExists();
+  }
+}
+
 void initWebSocket([int retrySeconds = 2]) {
   var reconnectScheduled = false;
 
   outputMsg("Connecting to websocket");
   ws = new WebSocket('ws://127.0.0.1:4040/ws');
 
-  ws.onOpen.listen((e) {
-    outputMsg('Connected');
-  });
+  ws.onOpen.listen(onSocketOpen);
 
   ws.onClose.listen((e) {
     outputMsg('Websocket closed, retrying in $retrySeconds seconds');
@@ -136,4 +149,12 @@ void displayCards(Map game, bool revealed) {
       othersCardDiv.append(new Card.revealCard(player, "...").root);
     }
   });
+}
+
+String getMyName() {
+  return localStorage['username'];
+}
+
+setMyName(String myName) {
+  localStorage['username'] = myName;
 }
