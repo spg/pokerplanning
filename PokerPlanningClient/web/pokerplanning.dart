@@ -40,21 +40,21 @@ void showGame() {
   ;
 
   querySelector("#revealOthersCards").onClick.listen(revealOthersCards);
+  querySelector("#reset").onClick.listen(reset);
 }
 
-void revealOthersCards(_) {
-  ws.send(JSON.encode({
-      "revealAll": ""
-  }));
+void revealOthersCards(_) => ws.send(JSON.encode({"revealAll": ""}));
+
+void reset(_) {
+  showGame();
+  ws.send(JSON.encode({"reset": ""}));
 }
 
 void selectCard(Event e) {
   Element card = e.target;
   querySelectorAll(".card :first-child").forEach((c) => c.classes.toggle("selected", false));
   card.classes.toggle("selected");
-  ws.send(JSON.encode({
-      "cardSelection": [myName, card.id]
-  }));
+  ws.send(JSON.encode({"cardSelection": [myName, card.id]}));
 }
 
 void login(MouseEvent e) {
@@ -105,12 +105,14 @@ void handleMessage(data) {
   var decoded = JSON.decode(data);
   Map game = decoded["game"];
   Map revealedGame = decoded["revealedGame"];
+  Map reset = decoded["reset"];
 
   if (game != null) {
     displayCards(game, false);
-  }
-  if (revealedGame != null) {
+  } else if(revealedGame != null) {
     displayCards(revealedGame, true);
+  } else if(reset != null) {
+
   }
 }
 
