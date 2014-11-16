@@ -25,6 +25,7 @@ void showLoginSuccessful() {
 void showGame() {
   querySelector("#game").classes.toggle("hidden", false);
   querySelector("#myCards")
+    ..innerHtml = ""
     ..append(new Card.selectCard("0", selectCard).root)
     ..append(new Card.selectCard("½", selectCard).root)
     ..append(new Card.selectCard("1", selectCard).root)
