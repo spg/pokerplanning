@@ -31,7 +31,9 @@ void login(MouseEvent e) {
 
   if (myName.isEmpty) return;
 
-  var loginInfo = {'login' : myName};
+  var loginInfo = {
+      'login' : myName
+  };
 
   ws.send(JSON.encode(loginInfo));
 
