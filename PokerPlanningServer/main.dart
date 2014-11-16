@@ -1,9 +1,8 @@
 import 'dart:io';
 import 'dart:convert';
 
-WebSocket ws;
-Map<String, String> game = {
-};
+Map<String, String> game = {};
+var allConnections = [];
 
 printGame() {
   print("The players connected are : ");
@@ -19,7 +18,7 @@ void handleMessage(socket, message) {
 
   if (login != null) {
     game.putIfAbsent(login, () => "");
-    socket.add("$login successfully connected");
+    allConnections.forEach((s) => s.add("$login successfully connected"));
   }
 
   printGame();
@@ -30,9 +29,10 @@ void main() {
     server.listen((HttpRequest req) {
       if (req.uri.path == '/ws') {
         WebSocketTransformer.upgrade(req)
+          ..then((socket) => allConnections.add(socket))
           ..then((socket) => socket.listen((msg) => handleMessage(socket, msg)));
       }
-    }).onError((e) => print("An error occurred."));
+    })..onError((e) => print("An error occurred."));
   });
 }
 
