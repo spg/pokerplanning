@@ -18,10 +18,17 @@ void handleMessage(socket, message) {
 
   if (login != null) {
     game.putIfAbsent(login, () => "");
-    allConnections.forEach((s) => s.add("$login successfully connected"));
+    broadcastGame();
   }
 
   printGame();
+}
+
+void broadcastGame() {
+  var encodedGame = {
+      "game": game
+  };
+  allConnections.forEach((s) => s.add(JSON.encode(encodedGame)));
 }
 
 void main() {
@@ -32,7 +39,8 @@ void main() {
           ..then((socket) => allConnections.add(socket))
           ..then((socket) => socket.listen((msg) => handleMessage(socket, msg)));
       }
-    })..onError((e) => print("An error occurred."));
+    })
+      ..onError((e) => print("An error occurred."));
   });
 }
 

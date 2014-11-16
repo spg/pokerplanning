@@ -62,7 +62,23 @@ void initWebSocket([int retrySeconds = 2]) {
     outputMsg("Error connecting to ws");
   });
 
-  ws.onMessage.listen((MessageEvent e) {
-    outputMsg('Received message: ${e.data}');
-  });
+  ws.onMessage.listen((MessageEvent e) => handleMessage(e.data));
+}
+
+void handleMessage(data) {
+  print(data);
+
+  var decoded = JSON.decode(data);
+  Map game = decoded["game"];
+  if (game != null) {
+    var othersCardDiv = querySelector("#othersCards");
+    othersCardDiv.innerHtml = '';
+
+    game.forEach((player, card) {
+      DivElement cardDiv = new DivElement();
+      cardDiv.id = player;
+      cardDiv.innerHtml = "$player : ?";
+      othersCardDiv.append(cardDiv);
+    });
+  }
 }
