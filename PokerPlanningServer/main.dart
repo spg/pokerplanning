@@ -1,9 +1,13 @@
 import 'dart:io';
 import 'dart:convert';
 
+import 'package:dart_config/default_server.dart';
+
 Map<String, String> game = {
 };
 var allConnections = [];
+var hostname;
+var port;
 
 printGame() {
   print("The players connected are : ");
@@ -47,8 +51,8 @@ void broadcastGame(bool reveal) {
   allConnections.forEach((s) => s.add(JSON.encode(encodedGame)));
 }
 
-void main() {
-  HttpServer.bind('127.0.0.1', 4040).then((server) {
+void startSocket() {
+  HttpServer.bind(hostname, port).then((server) {
     server.listen((HttpRequest req) {
       if (req.uri.path == '/ws') {
         WebSocketTransformer.upgrade(req)
@@ -59,4 +63,17 @@ void main() {
       ..onError((e) => print("An error occurred."));
   });
 }
+
+void main() {
+  loadConfig()
+  .then((Map config) {
+    hostname = config["hostname"];
+    port = config["port"];
+  }).catchError((error) => print(error))
+  .then((_) {if (hostname == null) throw("hostname wasn't set in config.yaml");}).catchError(showError)
+  .then((_) {if (port == null) throw("port wasn't set in config.yaml");}).catchError(showError)
+  .then((_) => startSocket());
+}
+
+void showError(error) => print(error);
 
