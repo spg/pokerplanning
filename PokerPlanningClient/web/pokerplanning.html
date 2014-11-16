@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Poker Planning</title>
+
+    <script async type="application/dart" src="pokerplanning.dart"></script>
+    <script async src="packages/browser/dart.js"></script>
+
+    <link rel="stylesheet" href="pokerplanning.css">
+</head>
+<body>
+<h1>PokerPlanning</h1>
+
+<div id="login">
+    <p>Please sign in</p>
+
+    <label for="nameInput">Name:<input id="nameInput"></label>
+    <button id="loginButton">Sign in</button>
+</div>
+
+<div class="hidden" id="loggedIn">You are logged in as <span id="nameSpan"></span></div>
+
+<div class="hidden" id="game">
+    <h2>Others cards</h2>
+
+    <div id="othersCards"></div>
+    <h2>My cards</h2>
+
+    <div id="myCards"></div>
+</div>
+
+<div id="output"></div>
+
+</body>
+</html>
