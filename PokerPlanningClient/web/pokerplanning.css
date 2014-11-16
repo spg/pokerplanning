@@ -35,7 +35,6 @@ h1, p {
 .card {
     display: inline-block;
     text-align: center;
-
 }
 
 .card :first-child {
