@@ -43,18 +43,24 @@ void showGame() {
   querySelector("#reset").onClick.listen(reset);
 }
 
-void revealOthersCards(_) => ws.send(JSON.encode({"revealAll": ""}));
+void revealOthersCards(_) => ws.send(JSON.encode({
+    "revealAll": ""
+}));
 
 void reset(_) {
   showGame();
-  ws.send(JSON.encode({"reset": ""}));
+  ws.send(JSON.encode({
+      "reset": ""
+  }));
 }
 
 void selectCard(Event e) {
   Element card = e.target;
   querySelectorAll(".card :first-child").forEach((c) => c.classes.toggle("selected", false));
   card.classes.toggle("selected");
-  ws.send(JSON.encode({"cardSelection": [myName, card.id]}));
+  ws.send(JSON.encode({
+      "cardSelection": [myName, card.id]
+  }));
 }
 
 void login(MouseEvent e) {
@@ -109,9 +115,9 @@ void handleMessage(data) {
 
   if (game != null) {
     displayCards(game, false);
-  } else if(revealedGame != null) {
+  } else if (revealedGame != null) {
     displayCards(revealedGame, true);
-  } else if(reset != null) {
+  } else if (reset != null) {
 
   }
 }
@@ -123,7 +129,7 @@ void displayCards(Map game, bool revealed) {
   othersCardDiv.innerHtml = '';
 
   game.forEach((player, card) {
-    if(revealed) {
+    if (revealed) {
       othersCardDiv.append(new Card.revealCard(player, card).root);
     } else {
       othersCardDiv.append(new Card.revealCard(player, "...").root);
