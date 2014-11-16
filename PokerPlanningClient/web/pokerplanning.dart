@@ -1,6 +1,7 @@
 import 'dart:html';
 import 'dart:async';
 import 'dart:convert';
+import 'card.dart';
 
 Map<String, String> players = {
 };
@@ -24,31 +25,36 @@ void showLoginSuccessful() {
 void showGame() {
   querySelector("#game").classes.toggle("hidden", false);
   querySelector("#myCards")
-    ..append(createCard("1"))
-    ..append(createCard("2"))
-    ..append(createCard("3"));
+    ..append(new Card.selectCard("0", selectCard).root)
+    ..append(new Card.selectCard("½", selectCard).root)
+    ..append(new Card.selectCard("1", selectCard).root)
+    ..append(new Card.selectCard("3", selectCard).root)
+    ..append(new Card.selectCard("5", selectCard).root)
+    ..append(new Card.selectCard("8", selectCard).root)
+    ..append(new Card.selectCard("13", selectCard).root)
+    ..append(new Card.selectCard("20", selectCard).root)
+    ..append(new Card.selectCard("40", selectCard).root)
+    ..append(new Card.selectCard("∞", selectCard).root)
+    ..append(new Card.selectCard("?", selectCard).root)
+    ..append(new Card.selectCard("Pause", selectCard).root)
+  ;
 
   querySelector("#revealOthersCards").onClick.listen(revealOthersCards);
 }
 
 void revealOthersCards(_) {
-  ws.send(JSON.encode({"revealAll": ""}));
-
+  ws.send(JSON.encode({
+      "revealAll": ""
+  }));
 }
 
 void selectCard(Event e) {
   Element card = e.target;
-  querySelectorAll(".card").forEach((c) => c.classes.toggle("selected", false));
+  querySelectorAll(".card :first-child").forEach((c) => c.classes.toggle("selected", false));
   card.classes.toggle("selected");
-  ws.send(JSON.encode({"cardSelection": [myName, card.id]}));
-}
-
-DivElement createCard(String value) {
-  return new DivElement()
-    ..setAttribute("id", value)
-    ..setInnerHtml(value)
-    ..classes.add("card")
-    ..onClick.listen(selectCard);
+  ws.send(JSON.encode({
+      "cardSelection": [myName, card.id]
+  }));
 }
 
 void login(MouseEvent e) {
@@ -102,7 +108,8 @@ void handleMessage(data) {
 
   if (game != null) {
     displayCards(game, false);
-  } if(revealedGame != null) {
+  }
+  if (revealedGame != null) {
     displayCards(revealedGame, true);
   }
 }
@@ -114,15 +121,10 @@ void displayCards(Map game, bool revealed) {
   othersCardDiv.innerHtml = '';
 
   game.forEach((player, card) {
-    DivElement cardDiv = new DivElement();
-    cardDiv.id = player;
-
-    if (revealed) {
-      cardDiv.innerHtml = "$player : $card";
+    if(revealed) {
+      othersCardDiv.append(new Card.revealCard(player, card).root);
     } else {
-      cardDiv.innerHtml = "$player : ?";
+      othersCardDiv.append(new Card.revealCard(player, "...").root);
     }
-
-    othersCardDiv.append(cardDiv);
   });
 }

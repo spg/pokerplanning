@@ -33,11 +33,14 @@ h1, p {
 }
 
 .card {
+    display: inline-block;
+}
+
+.card :first-child {
   width: 50px;
   height: 65px;
   border: solid black 1px;
   margin: 5px;
-  display: inline-block;
   user-select: none;
 }
 
