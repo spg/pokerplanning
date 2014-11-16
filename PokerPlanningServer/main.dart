@@ -18,6 +18,7 @@ void handleMessage(socket, message) {
   var login = json["login"];
   var cardSelection = json["cardSelection"];
   var reveal = json["revealAll"];
+  var reset = json["reset"];
 
   if (login != null) {
     print("Adding $login to the logged in users");
@@ -30,6 +31,9 @@ void handleMessage(socket, message) {
     game[playerName] = selectedCard;
   } else if (reveal != null) {
     broadcastGame(true);
+  } else if (reset != null) {
+    game.forEach((player, _) => game[player] = "");
+    broadcastGame(false);
   }
 
   printGame();

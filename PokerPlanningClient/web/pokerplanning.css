@@ -1,53 +1,65 @@
 
 body {
-  background-color: #F8F8F8;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 14px;
-  font-weight: normal;
-  line-height: 1.2em;
-  margin: 15px;
+    background-color: #F8F8F8;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.2em;
+    margin: 15px;
 }
 
 h1, p {
-  color: #333;
+    color: #333;
 }
 
 #sample_container_id {
-  width: 100%;
-  height: 400px;
-  position: relative;
-  border: 1px solid #ccc;
-  background-color: #fff;
+    width: 100%;
+    height: 400px;
+    position: relative;
+    border: 1px solid #ccc;
+    background-color: #fff;
 }
 
 #sample_text_id {
-  font-size: 24pt;
-  text-align: center;
-  margin-top: 140px;
-  -webkit-user-select: none;
-  user-select: none;
+    font-size: 24pt;
+    text-align: center;
+    margin-top: 140px;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .hidden {
-  display: none;
+    display: none;
 }
 
 .card {
     display: inline-block;
+    text-align: center;
 }
 
 .card :first-child {
-  width: 50px;
-  height: 65px;
-  border: solid black 1px;
-  margin: 5px;
-  user-select: none;
+    min-width: 50px;
+    height: 65px;
+
+    margin: 5px;
+    padding-left: 3px;
+    padding-right: 3px;
+
+    border: solid black 1px;
+    border-radius: 5px;
+
+    font-size: 2em;
+    line-height: 65px;
+
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 
 .selected {
-  background-color: yellowgreen;
+    background-color: yellowgreen;
 }
 
 #myCards {
-  width: auto;
+    width: auto;
 }

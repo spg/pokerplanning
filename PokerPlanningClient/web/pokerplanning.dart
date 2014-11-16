@@ -25,6 +25,7 @@ void showLoginSuccessful() {
 void showGame() {
   querySelector("#game").classes.toggle("hidden", false);
   querySelector("#myCards")
+    ..innerHtml = ""
     ..append(new Card.selectCard("0", selectCard).root)
     ..append(new Card.selectCard("½", selectCard).root)
     ..append(new Card.selectCard("1", selectCard).root)
@@ -40,11 +41,17 @@ void showGame() {
   ;
 
   querySelector("#revealOthersCards").onClick.listen(revealOthersCards);
+  querySelector("#reset").onClick.listen(reset);
 }
 
-void revealOthersCards(_) {
+void revealOthersCards(_) => ws.send(JSON.encode({
+    "revealAll": ""
+}));
+
+void reset(_) {
+  showGame();
   ws.send(JSON.encode({
-      "revealAll": ""
+      "reset": ""
   }));
 }
 
@@ -105,12 +112,14 @@ void handleMessage(data) {
   var decoded = JSON.decode(data);
   Map game = decoded["game"];
   Map revealedGame = decoded["revealedGame"];
+  Map reset = decoded["reset"];
 
   if (game != null) {
     displayCards(game, false);
-  }
-  if (revealedGame != null) {
+  } else if (revealedGame != null) {
     displayCards(revealedGame, true);
+  } else if (reset != null) {
+
   }
 }
 
@@ -121,7 +130,7 @@ void displayCards(Map game, bool revealed) {
   othersCardDiv.innerHtml = '';
 
   game.forEach((player, card) {
-    if(revealed) {
+    if (revealed) {
       othersCardDiv.append(new Card.revealCard(player, card).root);
     } else {
       othersCardDiv.append(new Card.revealCard(player, "...").root);
