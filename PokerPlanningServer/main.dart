@@ -9,9 +9,15 @@ var allConnections = [];
 var hostname;
 var port;
 
-printGame() {
+void printGame() {
   print("The players connected are : ");
   game.forEach((k, v) => print("$k and their current card choice is: $v"));
+}
+
+void resetGame() {
+  game.forEach((player, _) => game[player] = "");
+  print("sending reset signal");
+  broadcastData(JSON.encode({"gameHasReset": ""}));
 }
 
 void handleMessage(socket, message) {
@@ -22,7 +28,7 @@ void handleMessage(socket, message) {
   var login = json["login"];
   var cardSelection = json["cardSelection"];
   var reveal = json["revealAll"];
-  var reset = json["reset"];
+  var reset = json["resetRequest"];
 
   if (login != null) {
     print("Adding $login to the logged in users");
@@ -36,7 +42,7 @@ void handleMessage(socket, message) {
   } else if (reveal != null) {
     broadcastGame(true);
   } else if (reset != null) {
-    game.forEach((player, _) => game[player] = "");
+    resetGame();
     broadcastGame(false);
   }
 
@@ -48,7 +54,11 @@ void broadcastGame(bool reveal) {
       (reveal ? "revealedGame" : "game"): game
   };
 
-  allConnections.forEach((s) => s.add(JSON.encode(encodedGame)));
+  broadcastData(JSON.encode(encodedGame));
+}
+
+void broadcastData(data) {
+  allConnections.forEach((s) => s.add(data));
 }
 
 void startSocket() {

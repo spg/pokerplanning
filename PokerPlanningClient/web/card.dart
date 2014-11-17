@@ -18,7 +18,9 @@ class Card {
     _elem.innerHtml = value;
 
     _elem.setAttribute("id", playerName);
-    root.classes.add("card");
+    _elem.classes.add("card");
+
+    root.classes.add("cardContainer");
   }
 
   Card.selectCard(this.value, clickHandler) {
@@ -29,6 +31,8 @@ class Card {
     _elem.onClick.listen(clickHandler);
 
     _elem.setAttribute("id", value);
-    root.classes.add("card");
+    _elem.classes.add("card");
+
+    root.classes.add("cardContainer");
   }
 }

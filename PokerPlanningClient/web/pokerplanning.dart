@@ -58,23 +58,28 @@ void showGame() {
   ;
 
   querySelector("#revealOthersCards").onClick.listen(revealOthersCards);
-  querySelector("#reset").onClick.listen(reset);
+  querySelector("#reset").onClick.listen(initReset);
 }
 
 void revealOthersCards(_) => ws.send(JSON.encode({
     "revealAll": ""
 }));
 
-void reset(_) {
-  showGame();
+void clearSelectedCard() => querySelectorAll(".card").forEach((Element c) => c.classes.toggle("selected", false));
+
+void initReset(_) {
   ws.send(JSON.encode({
-      "reset": ""
+      "resetRequest": ""
   }));
+}
+
+void gameHasReset() {
+  clearSelectedCard();
 }
 
 void selectCard(Event e) {
   Element card = e.target;
-  querySelectorAll(".card :first-child").forEach((c) => c.classes.toggle("selected", false));
+  clearSelectedCard();
   card.classes.toggle("selected");
   ws.send(JSON.encode({
       "cardSelection": [myName, card.id]
@@ -143,14 +148,15 @@ void handleMessage(data) {
   var decoded = JSON.decode(data);
   Map game = decoded["game"];
   Map revealedGame = decoded["revealedGame"];
-  Map reset = decoded["reset"];
+  String reset = decoded["gameHasReset"];
 
   if (game != null) {
     displayCards(game, false);
   } else if (revealedGame != null) {
     displayCards(revealedGame, true);
   } else if (reset != null) {
-
+    print("Game has reset!");
+    gameHasReset();
   }
 }
 

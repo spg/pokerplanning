@@ -32,14 +32,16 @@ h1, p {
     display: none;
 }
 
-.card {
+.cardContainer {
     display: inline-block;
     text-align: center;
 }
 
-.card :first-child {
+.card {
     min-width: 50px;
     height: 65px;
+
+    text-align: center;
 
     margin: 5px;
     padding-left: 3px;
