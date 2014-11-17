@@ -1,5 +1,4 @@
 import 'dart:html';
-import 'dart:async';
 import 'dart:convert';
 import 'card.dart';
 
@@ -7,6 +6,12 @@ Map<String, String> players = {
 };
 Storage localStorage = window.localStorage;
 WebSocket ws;
+
+String get myName => localStorage['username'];
+
+void set myName(String newName) {
+  localStorage['username'] = newName;
+}
 
 void main() {
   initWebSocket();
@@ -17,7 +22,7 @@ void hideLoginForm() {
 }
 
 void showLoginSuccessful() {
-  querySelector("#nameSpan").text = getMyName();
+  querySelector("#nameSpan").text = myName;
   querySelector("#loggedIn").classes.toggle("hidden", false);
 }
 
@@ -59,24 +64,24 @@ void selectCard(Event e) {
   querySelectorAll(".card :first-child").forEach((c) => c.classes.toggle("selected", false));
   card.classes.toggle("selected");
   ws.send(JSON.encode({
-      "cardSelection": [getMyName(), card.id]
+      "cardSelection": [myName, card.id]
   }));
 }
 
 void handleLoginClick(MouseEvent e) {
   InputElement nameInput = querySelector("#nameInput");
-  String myName = nameInput.value;
+  String newName = nameInput.value;
 
-  if (myName.isEmpty) return;
+  if (newName.isEmpty) return;
 
-  setMyName(myName);
+  myName = newName;
 
   onUserExists();
 }
 
 onUserExists() {
   var loginInfo = {
-      'login' : getMyName()
+      'login' : myName
   };
 
   ws.send(JSON.encode(loginInfo));
@@ -93,7 +98,7 @@ outputMsg(String msg) {
 onSocketOpen(event) {
   outputMsg('Connected');
 
-  if (getMyName() == null) {
+  if (myName == null) {
     querySelector("#loginButton").onClick.listen(handleLoginClick);
   } else {
     onUserExists();
@@ -149,12 +154,4 @@ void displayCards(Map game, bool revealed) {
       othersCardDiv.append(new Card.revealCard(player, "...").root);
     }
   });
-}
-
-String getMyName() {
-  return localStorage['username'];
-}
-
-setMyName(String myName) {
-  localStorage['username'] = myName;
 }
