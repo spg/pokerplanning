@@ -2,3 +2,4 @@ name: PokerPlanning
 description: Poker planning application
 dependencies:
   browser: any
+  dart_config: any

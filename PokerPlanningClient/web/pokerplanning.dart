@@ -2,10 +2,14 @@ import 'dart:html';
 import 'dart:convert';
 import 'card.dart';
 
+import 'package:dart_config/default_browser.dart';
+
 Map<String, String> players = {
 };
 Storage localStorage = window.localStorage;
 WebSocket ws;
+var hostname;
+var port;
 
 String get myName => localStorage['username'];
 
@@ -14,8 +18,17 @@ void set myName(String newName) {
 }
 
 void main() {
-  initWebSocket();
+  loadConfig()
+  .then((Map config) {
+    hostname = config["hostname"];
+    port = config["port"];
+  }).catchError((error) => print(error))
+  .then((_) {if (hostname == null) throw("hostname wasn't set in config.yaml");}).catchError(showError)
+  .then((_) {if (port == null) throw("port wasn't set in config.yaml");}).catchError(showError)
+  .then((_) => initWebSocket()).catchError(showError);
 }
+
+void showError(error) => querySelector("#error").appendHtml("$error.toString() <br>");
 
 void hideLoginForm() {
   querySelector("#login").remove();
@@ -109,7 +122,7 @@ void initWebSocket([int retrySeconds = 2]) {
   var reconnectScheduled = false;
 
   outputMsg("Connecting to websocket");
-  ws = new WebSocket('ws://127.0.0.1:4040/ws');
+  ws = new WebSocket('ws://$hostname:$port/ws');
 
   ws.onOpen.listen(onSocketOpen);
 

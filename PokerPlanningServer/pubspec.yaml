@@ -2,6 +2,6 @@ name: PokerPlanningServer
 version: 0.0.1
 description: A sample command-line application
 dependencies:
-
+  dart_config: any
 dev_dependencies:
 #  unittest: any
