@@ -25,7 +25,6 @@ void main() {
   }).catchError((error) => print(error))
   .then((_) {if (hostname == null) throw("hostname wasn't set in config.yaml");}).catchError(showError)
   .then((_) {if (port == null) throw("port wasn't set in config.yaml");}).catchError(showError)
-  .then((_) => querySelector("#loginButton").onClick.listen(login)).catchError(showError)
   .then((_) => initWebSocket()).catchError(showError);
 }
 
