@@ -62,6 +62,7 @@ void broadcastData(data) {
 }
 
 void startSocket() {
+  print("Starting websocket...");
   HttpServer.bind(hostname, port).then((server) {
     server.listen((HttpRequest req) {
       if (req.uri.path == '/ws') {
