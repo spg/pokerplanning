@@ -23,8 +23,12 @@ void main() {
     hostname = config["hostname"];
     port = config["port"];
   }).catchError((error) => print(error))
-  .then((_) {if (hostname == null) throw("hostname wasn't set in config.yaml");}).catchError(showError)
-  .then((_) {if (port == null) throw("port wasn't set in config.yaml");}).catchError(showError)
+  .then((_) {
+    if (hostname == null) throw("hostname wasn't set in config.yaml");
+  }).catchError(showError)
+  .then((_) {
+    if (port == null) throw("port wasn't set in config.yaml");
+  }).catchError(showError)
   .then((_) => initWebSocket()).catchError(showError);
 }
 
@@ -46,6 +50,7 @@ void showGame() {
     ..append(new Card.selectCard("0", selectCard).root)
     ..append(new Card.selectCard("½", selectCard).root)
     ..append(new Card.selectCard("1", selectCard).root)
+    ..append(new Card.selectCard("2", selectCard).root)
     ..append(new Card.selectCard("3", selectCard).root)
     ..append(new Card.selectCard("5", selectCard).root)
     ..append(new Card.selectCard("8", selectCard).root)
