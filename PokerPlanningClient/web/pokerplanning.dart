@@ -23,8 +23,12 @@ void main() {
     hostname = config["hostname"];
     port = config["port"];
   }).catchError((error) => print(error))
-  .then((_) {if (hostname == null) throw("hostname wasn't set in config.yaml");}).catchError(showError)
-  .then((_) {if (port == null) throw("port wasn't set in config.yaml");}).catchError(showError)
+  .then((_) {
+    if (hostname == null) throw("hostname wasn't set in config.yaml");
+  }).catchError(showError)
+  .then((_) {
+    if (port == null) throw("port wasn't set in config.yaml");
+  }).catchError(showError)
   .then((_) => initWebSocket()).catchError(showError);
 }
 
@@ -46,6 +50,7 @@ void showGame() {
     ..append(new Card.selectCard("0", selectCard).root)
     ..append(new Card.selectCard("½", selectCard).root)
     ..append(new Card.selectCard("1", selectCard).root)
+    ..append(new Card.selectCard("2", selectCard).root)
     ..append(new Card.selectCard("3", selectCard).root)
     ..append(new Card.selectCard("5", selectCard).root)
     ..append(new Card.selectCard("8", selectCard).root)
@@ -58,23 +63,28 @@ void showGame() {
   ;
 
   querySelector("#revealOthersCards").onClick.listen(revealOthersCards);
-  querySelector("#reset").onClick.listen(reset);
+  querySelector("#reset").onClick.listen(initReset);
 }
 
 void revealOthersCards(_) => ws.send(JSON.encode({
     "revealAll": ""
 }));
 
-void reset(_) {
-  showGame();
+void clearSelectedCard() => querySelectorAll(".card").forEach((Element c) => c.classes.toggle("selected", false));
+
+void initReset(_) {
   ws.send(JSON.encode({
-      "reset": ""
+      "resetRequest": ""
   }));
+}
+
+void gameHasReset() {
+  clearSelectedCard();
 }
 
 void selectCard(Event e) {
   Element card = e.target;
-  querySelectorAll(".card :first-child").forEach((c) => c.classes.toggle("selected", false));
+  clearSelectedCard();
   card.classes.toggle("selected");
   ws.send(JSON.encode({
       "cardSelection": [myName, card.id]
@@ -143,14 +153,15 @@ void handleMessage(data) {
   var decoded = JSON.decode(data);
   Map game = decoded["game"];
   Map revealedGame = decoded["revealedGame"];
-  Map reset = decoded["reset"];
+  String reset = decoded["gameHasReset"];
 
   if (game != null) {
     displayCards(game, false);
   } else if (revealedGame != null) {
     displayCards(revealedGame, true);
   } else if (reset != null) {
-
+    print("Game has reset!");
+    gameHasReset();
   }
 }
 
@@ -161,10 +172,12 @@ void displayCards(Map game, bool revealed) {
   othersCardDiv.innerHtml = '';
 
   game.forEach((player, card) {
-    if (revealed) {
-      othersCardDiv.append(new Card.revealCard(player, card).root);
-    } else {
-      othersCardDiv.append(new Card.revealCard(player, "...").root);
+    Card cardWidget = new Card.revealCard(player, revealed ? card : "...");
+
+    if (!revealed) {
+      cardWidget.setSelected(card != "");
     }
+
+    othersCardDiv.append(cardWidget.root);
   });
 }
