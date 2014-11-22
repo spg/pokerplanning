@@ -174,10 +174,10 @@ void displayCards(Map game, bool revealed) {
   game.forEach((player, card) {
     Card cardWidget = new Card.revealCard(player, revealed ? card : "...");
 
-    othersCardDiv.append(cardWidget.root);
-
     if (!revealed) {
       cardWidget.setSelected(card != "");
     }
+
+    othersCardDiv.append(cardWidget.root);
   });
 }
