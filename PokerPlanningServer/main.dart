@@ -41,6 +41,7 @@ void handleMessage(socket, message) {
     var selectedCard = cardSelection[1];
     print("Adding $playerName card selection: $selectedCard.");
     game[playerName] = selectedCard;
+    broadcastGame(false);
   } else if (reveal != null) {
     broadcastGame(true);
   } else if (reset != null) {
@@ -52,10 +53,25 @@ void handleMessage(socket, message) {
 }
 
 void broadcastGame(bool reveal) {
-  var encodedGame = {
-      (reveal ? "revealedGame" : "game"): game
-  };
+  var encodedGame = {};
+  if (reveal) {
+    encodedGame = {
+      "revealedGame" : game
+    };
+  } else {
+    var newGame = new Map.from(game);
+    newGame.forEach((player, card) {
+      if (card != "") {
+         newGame[player] = "Y";
+      }
+    });
 
+    encodedGame = {
+      "game" : newGame
+    };
+  }
+
+  print("PRINTING GAME : $encodedGame");
   broadcastData(JSON.encode(encodedGame));
 }
 

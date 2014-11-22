@@ -35,4 +35,8 @@ class Card {
 
     root.classes.add("cardContainer");
   }
+
+  void setSelected(bool isSelected) {
+    _elem.classes.toggle("selected", isSelected);
+  }
 }

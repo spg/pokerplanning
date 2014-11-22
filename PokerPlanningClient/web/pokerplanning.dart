@@ -172,10 +172,12 @@ void displayCards(Map game, bool revealed) {
   othersCardDiv.innerHtml = '';
 
   game.forEach((player, card) {
-    if (revealed) {
-      othersCardDiv.append(new Card.revealCard(player, card).root);
-    } else {
-      othersCardDiv.append(new Card.revealCard(player, "...").root);
+    Card cardWidget = new Card.revealCard(player, revealed ? card : "...");
+
+    othersCardDiv.append(cardWidget.root);
+
+    if (!revealed) {
+      cardWidget.setSelected(card != "");
     }
   });
 }
