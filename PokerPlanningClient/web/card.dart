@@ -13,7 +13,7 @@ class Card {
     root.append(_label);
 
     if (playerName.isNotEmpty) {
-      _label.innerHtml =playerName;
+      _label.innerHtml = playerName;
     }
     _elem.innerHtml = value;
 

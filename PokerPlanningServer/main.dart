@@ -6,6 +6,7 @@ import 'package:dart_config/default_server.dart';
 Map<String, String> game = {
 };
 var allConnections = [];
+Map<WebSocket, String> loggedInUsers = {};
 var hostname;
 var port;
 
@@ -33,6 +34,7 @@ void handleMessage(socket, message) {
   if (login != null) {
     print("Adding $login to the logged in users");
     game.putIfAbsent(login, () => "");
+    loggedInUsers.putIfAbsent(socket, () => login);
     broadcastGame(false);
   } else if (cardSelection != null) {
     var playerName = cardSelection[0];
@@ -61,6 +63,13 @@ void broadcastData(data) {
   allConnections.forEach((s) => s.add(data));
 }
 
+void handleClose(WebSocket socket) {
+  String playerName = loggedInUsers[socket];
+
+  game.remove(playerName);
+  broadcastGame(false);
+}
+
 void startSocket() {
   print("Starting websocket...!");
   HttpServer.bind(hostname, port).then((server) {
@@ -68,7 +77,7 @@ void startSocket() {
       if (req.uri.path == '/ws') {
         WebSocketTransformer.upgrade(req)
           ..then((socket) => allConnections.add(socket))
-          ..then((socket) => socket.listen((msg) => handleMessage(socket, msg)));
+          ..then((socket) => socket.listen((msg) => handleMessage(socket, msg), onDone: () => handleClose(socket)));
       }
     })
       ..onError((e) => print("An error occurred."));
