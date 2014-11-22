@@ -8,8 +8,8 @@ On linux systems do:
 
 And create the following entries for local development:
 ```
-hostname=localhost
-port=whateverYouWant
+hostname: localhost
+port: whateverYouWant
 ```
 
 Use whatever port you'd like (ie: 4040) and use it on both projects
