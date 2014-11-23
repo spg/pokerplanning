@@ -19,3 +19,6 @@ Then to launch the server, cd into the server directory and type `dart main.dart
 if you want the checked mode type `dart -c main.dart`
 
 In another terminal you can launch the client with the following command : `pub serve`
+
+###Notes
+Don't forget to `pub get` in each project (client, server) to fetch the necessary packages 
