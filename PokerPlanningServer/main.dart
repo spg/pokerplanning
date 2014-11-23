@@ -21,6 +21,16 @@ void resetGame() {
   broadcastData(JSON.encode({"gameHasReset": ""}));
 }
 
+void kick(String kicked, String kickedBy) {
+  broadcastData(JSON.encode(
+      {"kick" :
+        {
+            "kicked" : kicked,
+            "kickedBy" : kickedBy
+        }
+      }));
+}
+
 void handleMessage(socket, message) {
   print("Received : " + message);
 
@@ -30,6 +40,7 @@ void handleMessage(socket, message) {
   var cardSelection = json["cardSelection"];
   var reveal = json["revealAll"];
   var reset = json["resetRequest"];
+  var kicked = json["kicked"];
 
   if (login != null) {
     print("Adding $login to the logged in users");
@@ -47,6 +58,8 @@ void handleMessage(socket, message) {
   } else if (reset != null) {
     resetGame();
     broadcastGame(false);
+  } else if (kicked != null) {
+    kick(kicked, loggedInUsers[socket]);
   }
 
   printGame();
