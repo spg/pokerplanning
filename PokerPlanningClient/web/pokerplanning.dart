@@ -66,16 +66,16 @@ void showGame() {
   querySelector("#reset").onClick.listen(initReset);
 }
 
-void revealOthersCards(_) => ws.send(JSON.encode({
+void revealOthersCards(_) => sendSocketMsg({
     "revealAll": ""
-}));
+});
 
 void clearSelectedCard() => querySelectorAll(".card").forEach((Element c) => c.classes.toggle("selected", false));
 
 void initReset(_) {
-  ws.send(JSON.encode({
+  sendSocketMsg({
       "resetRequest": ""
-  }));
+  });
 }
 
 void gameHasReset() {
@@ -86,9 +86,9 @@ void selectCard(Event e) {
   Element card = e.target;
   clearSelectedCard();
   card.classes.toggle("selected");
-  ws.send(JSON.encode({
+  sendSocketMsg({
       "cardSelection": [myName, card.id]
-  }));
+  });
 }
 
 void handleLoginClick(MouseEvent e) {
@@ -107,7 +107,7 @@ onUserExists() {
       'login' : myName
   };
 
-  ws.send(JSON.encode(loginInfo));
+  sendSocketMsg(loginInfo);
 
   hideLoginForm();
   showLoginSuccessful();
@@ -147,6 +147,13 @@ void initWebSocket([int retrySeconds = 2]) {
   ws.onMessage.listen((MessageEvent e) => handleMessage(e.data));
 }
 
+void logout(String msg) {
+  ws.close();
+  window.alert(msg);
+  localStorage.remove("username");
+  window.location.reload();
+}
+
 void handleMessage(data) {
   print(data);
 
@@ -154,6 +161,7 @@ void handleMessage(data) {
   Map game = decoded["game"];
   Map revealedGame = decoded["revealedGame"];
   String reset = decoded["gameHasReset"];
+  Map kick = decoded["kick"];
 
   if (game != null) {
     displayCards(game, false);
@@ -162,6 +170,8 @@ void handleMessage(data) {
   } else if (reset != null) {
     print("Game has reset!");
     gameHasReset();
+  } else if (kick != null) {
+    handleKick(kick);
   }
 }
 
@@ -172,7 +182,7 @@ void displayCards(Map game, bool revealed) {
   othersCardDiv.innerHtml = '';
 
   game.forEach((player, card) {
-    Card cardWidget = new Card.revealCard(player, revealed ? card : "...");
+    Card cardWidget = new Card.revealCard(player, revealed ? card : "...", kickPlayer);
 
     if (!revealed) {
       cardWidget.setSelected(card != "");
@@ -180,4 +190,24 @@ void displayCards(Map game, bool revealed) {
 
     othersCardDiv.append(cardWidget.root);
   });
+}
+
+void sendSocketMsg(Object jsObject) {
+  ws.send(JSON.encode(jsObject));
+}
+
+void kickPlayer(String player) {
+  sendSocketMsg({"kicked" : player});
+}
+
+void handleKick(Map kick) {
+  String kicked = kick["kicked"];
+  String kickedBy = kick["kickedBy"];
+
+  if (kicked == myName) {
+    var msg = "you have been kicked by: $kickedBy";
+    logout(msg);
+  } else {
+    print("$kicked has been kicked by $kickedBy");
+  }
 }

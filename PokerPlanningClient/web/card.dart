@@ -7,10 +7,12 @@ class Card {
   DivElement root = new DivElement();
   DivElement _elem = new DivElement();
   DivElement _label = new DivElement();
+  ButtonElement _kickBtn = new ButtonElement();
 
-  Card.revealCard(this.playerName, this.value) {
+  Card.revealCard(this.playerName, this.value, kickHandler) {
     root.append(_elem);
     root.append(_label);
+    root.append(_kickBtn);
 
     if (playerName.isNotEmpty) {
       _label.innerHtml = playerName;
@@ -21,6 +23,9 @@ class Card {
     _elem.classes.add("card");
 
     root.classes.add("cardContainer");
+
+    _kickBtn.text = "Kick this player";
+    _kickBtn.onClick.listen((e) => kickHandler(playerName));
   }
 
   Card.selectCard(this.value, clickHandler) {
