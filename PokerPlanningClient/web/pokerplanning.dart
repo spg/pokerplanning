@@ -46,7 +46,7 @@ void showLoginSuccessful() {
 void showGame() {
   querySelector("#game").classes.toggle("hidden", false);
   querySelector("#myCards")
-    ..innerHtml = ""
+    ..innerHtml = "<div class=\"cardContainer\"><div class=\"card cardSpacer\"></div></div>"
     ..append(new Card.selectCard("0", selectCard).root)
     ..append(new Card.selectCard("½", selectCard).root)
     ..append(new Card.selectCard("1", selectCard).root)
@@ -179,7 +179,7 @@ void displayCards(Map game, bool revealed) {
   print("display cards with revealed : $revealed");
 
   var othersCardDiv = querySelector("#othersCards");
-  othersCardDiv.innerHtml = '';
+  othersCardDiv.innerHtml = "<div class=\"player\"></div>";
 
   game.forEach((player, card) {
     Card cardWidget = new Card.revealCard(player, revealed ? card : "...", kickPlayer);
