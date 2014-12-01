@@ -1,67 +1,200 @@
+/* -> PokerPlanning Layout ---- */
+
+@import url(http://reset5.googlecode.com/hg/reset.min.css);
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 
 body {
-    background-color: #F8F8F8;
+    background-color: #fff;
+    color: #3f3f3f;
     font-family: 'Open Sans', sans-serif;
-    font-size: 14px;
+    font-size: 1.4em;
     font-weight: normal;
     line-height: 1.2em;
-    margin: 15px;
 }
 
-h1, p {
-    color: #333;
+h1 {
+    font-size: 3rem;
+    text-transform: uppercase;
 }
 
-#sample_container_id {
-    width: 100%;
-    height: 400px;
-    position: relative;
-    border: 1px solid #ccc;
+h1 strong {
+    text-transform: lowercase;
+}
+
+h1 span {
+    font-weight: 300;
+}
+
+h2 {
+    font-size: 2.5rem;
+
+    margin-bottom: 1em;
+}
+
+h3 {
+    background-color: #3f3f3f;
+    color: #fff;
+    font-size: 400;
+}
+
+button {
     background-color: #fff;
+    color: #3f3f3f;
+
+    display: inline-block;
+    padding: 10px !important;
+    border: 1px solid #3f3f3f;
+    border-radius: 3px;
+
+    -webkit-transition: all .2s;
+    transition: all .2s;
 }
 
-#sample_text_id {
-    font-size: 24pt;
-    text-align: center;
-    margin-top: 140px;
-    -webkit-user-select: none;
-    user-select: none;
+button:hover {
+    background-color: #3f3f3f;
+    color: #fff;
 }
 
 .hidden {
     display: none;
 }
 
+:focus {
+    outline: 0;
+}
+
+/* -- Document container ----- */
+
+.container {
+    width: 960px;
+    margin: 0 auto;
+
+    position: relative;
+}
+
+/* --> Header section -------- */
+
+header {
+    background-color: #3f3f3f;
+    color: #fff;
+
+    padding: 3em 0 1.4em;
+    margin-bottom: 2em;
+}
+
+#loggedIn {
+    position: absolute;
+    bottom: -0.3em;
+    right: 0;
+}
+
+/* --> Cards ----------------- */
+
 .cardContainer {
+    vertical-align: bottom;
+
     display: inline-block;
-    text-align: center;
 }
 
 .card {
-    min-width: 50px;
-    height: 65px;
-
-    text-align: center;
-
-    margin: 5px;
-    padding-left: 3px;
-    padding-right: 3px;
-
-    border: solid black 1px;
-    border-radius: 5px;
-
     font-size: 2em;
     line-height: 65px;
+    text-align: center;
+
+    min-width: 50px;
+    height: 65px;
+    margin: 0 5px;
+    padding-left: 3px;
+    padding-right: 3px;
+    border: solid black 1px;
+    border-radius: 5px;
 
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+.card:hover {
+    background-color: #3f3f3f;
+    color: #fff;
+
+    cursor: pointer;
 }
 
 .selected {
-    background-color: yellowgreen;
+    background-color: #3f3f3f;
+    color: #fff;
+}
+
+/* --> App content ----------- */
+
+#othersCards {
+    text-align: center;
+
+    margin-bottom: 2em;
+}
+
+#othersCards > div {
+    margin: 0 10px;
+}
+
+#othersCards > div .card {
+    margin: 0;
+
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: 0;
+}
+
+#othersCards > div h3 {
+    padding: 5px;
+    margin-bottom: 10px;
 }
 
 #myCards {
-    width: auto;
+    text-align: center;
+
+    border-bottom: 2px solid #3f3f3f;
+    margin-bottom: 2em;
+}
+
+#myCards .card {
+    border-bottom: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+
+    -webkit-transition: all .1s;
+    transition: all .1s;
+}
+
+#myCards .card:hover {
+    padding-bottom: 10px;
+}
+
+#myCards .cardSpacer {
+    height: 76px;
+    width: 0;
+    min-width: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+#actions {
+    text-align: center;
 }

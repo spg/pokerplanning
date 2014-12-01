@@ -15,7 +15,7 @@ class Card {
     root.append(_kickBtn);
 
     if (playerName.isNotEmpty) {
-      _label.innerHtml = playerName;
+      _label.innerHtml = "<h3>" + playerName + "</h3>";
     }
     _elem.innerHtml = value;
 
