@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'card.dart';
 
 import 'package:dart_config/default_browser.dart';
+import 'package:polymer/polymer.dart';
 
 Map<String, String> players = {
 };
@@ -18,6 +19,8 @@ void set myName(String newName) {
 }
 
 void main() {
+  initPolymer();
+
   loadConfig()
   .then((Map config) {
     hostname = config["hostname"];

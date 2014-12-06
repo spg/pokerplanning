@@ -3,3 +3,8 @@ description: Poker planning application
 dependencies:
   browser: any
   dart_config: any
+  polymer: ">=0.15.1 <0.16.0"
+  paper_elements: ">=0.6.0 <0.7.0"
+transformers:
+- polymer:
+    entry_points: web/index.html
