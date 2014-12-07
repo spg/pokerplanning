@@ -13,17 +13,17 @@ class CardComponent extends PolymerElement {
   @published
   bool revealed;
 
+  String _value;
+  var _kickHandler;
+  ButtonElement _kickButton;
+  DivElement _cardDiv;
+
   void set value(String newValue) {
     _value = newValue;
     valueToDisplay = revealed ? _value : "...";
   }
 
   String get value => _value;
-
-  String _value;
-  var _kickHandler;
-  ButtonElement _kickButton;
-  DivElement _cardDiv;
 
   CardComponent.created() : super.created() {
   }
@@ -32,8 +32,7 @@ class CardComponent extends PolymerElement {
     CardComponent component = (new Element.tag("card-component") as CardComponent)
       ..playerName = playerName
       ..revealed = revealed
-      .._value = value
-      .._value = value
+      ..value = value
       .._kickHandler = kickHandler;
 
     return component;
