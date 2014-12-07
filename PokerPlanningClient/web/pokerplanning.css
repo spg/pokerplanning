@@ -1,6 +1,6 @@
 /* -> PokerPlanning Layout ---- */
 
-@import url(http://reset5.googlecode.com/hg/reset.min.css);
+@import url(https://reset5.googlecode.com/hg/reset.min.css);
 
 * {
   -webkit-box-sizing: border-box;
@@ -43,37 +43,36 @@ h2 {
     margin-bottom: 1em;
 }
 
-h3 {
-    background-color: #3f3f3f;
-    color: #fff;
-    font-size: 400;
-}
+/*h3 {*/
+    /*background-color: #3f3f3f;*/
+    /*color: #fff;*/
+/*}*/
 
-button {
-    background-color: #fff;
-    color: #3f3f3f;
+/*button {*/
+    /*background-color: #fff;*/
+    /*color: #3f3f3f;*/
 
-    display: inline-block;
-    padding: 10px !important;
-    border: 1px solid #3f3f3f;
-    border-radius: 3px;
+    /*display: inline-block;*/
+    /*padding: 10px !important;*/
+    /*border: 1px solid #3f3f3f;*/
+    /*border-radius: 3px;*/
 
-    -webkit-transition: all .2s;
-    transition: all .2s;
-}
+    /*-webkit-transition: all .2s;*/
+    /*transition: all .2s;*/
+/*}*/
 
-button:hover {
-    background-color: #3f3f3f;
-    color: #fff;
-}
+/*button:hover {*/
+    /*background-color: #3f3f3f;*/
+    /*color: #fff;*/
+/*}*/
 
-.hidden {
-    display: none;
-}
+/*.hidden {*/
+    /*display: none;*/
+/*}*/
 
-:focus {
-    outline: 0;
-}
+/*:focus {*/
+    /*outline: 0;*/
+/*}*/
 
 /* -- Document container ----- */
 
@@ -102,44 +101,44 @@ header {
 
 /* --> Cards ----------------- */
 
-.cardContainer {
-    vertical-align: bottom;
+/*.cardContainer {*/
+    /*vertical-align: bottom;*/
 
-    display: inline-block;
-}
+    /*display: inline-block;*/
+/*}*/
 
-.card {
-    font-size: 2em;
-    line-height: 65px;
-    text-align: center;
+/*.card {*/
+    /*font-size: 2em;*/
+    /*line-height: 65px;*/
+    /*text-align: center;*/
 
-    min-width: 50px;
-    height: 65px;
-    margin: 0 5px;
-    padding-left: 3px;
-    padding-right: 3px;
-    border: solid black 1px;
-    border-radius: 5px;
+    /*min-width: 50px;*/
+    /*height: 65px;*/
+    /*margin: 0 5px;*/
+    /*padding-left: 3px;*/
+    /*padding-right: 3px;*/
+    /*border: solid black 1px;*/
+    /*border-radius: 5px;*/
 
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    -webkit-box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
-}
+    /*-moz-user-select: none;*/
+    /*-webkit-user-select: none;*/
+    /*-ms-user-select: none;*/
+    /*-webkit-box-sizing: content-box;*/
+    /*-moz-box-sizing: content-box;*/
+    /*box-sizing: content-box;*/
+/*}*/
 
-.card:hover {
-    background-color: #3f3f3f;
-    color: #fff;
+/*.card:hover {*/
+    /*background-color: #3f3f3f;*/
+    /*color: #fff;*/
 
-    cursor: pointer;
-}
+    /*cursor: pointer;*/
+/*}*/
 
-.selected {
-    background-color: #3f3f3f;
-    color: #fff;
-}
+/*.selected {*/
+    /*background-color: #3f3f3f;*/
+    /*color: #fff;*/
+/*}*/
 
 /* --> App content ----------- */
 
@@ -149,52 +148,52 @@ header {
     margin-bottom: 2em;
 }
 
-#othersCards > div {
-    margin: 0 10px;
-}
+/*#othersCards > div {*/
+    /*margin: 0 10px;*/
+/*}*/
 
-#othersCards > div .card {
-    margin: 0;
+/*#othersCards > div .card {*/
+    /*margin: 0;*/
 
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    border-bottom: 0;
-}
+    /*border-bottom-left-radius: 0;*/
+    /*border-bottom-right-radius: 0;*/
+    /*border-bottom: 0;*/
+/*}*/
 
-#othersCards > div h3 {
-    padding: 5px;
-    margin-bottom: 10px;
-}
+/*#othersCards > div h3 {*/
+    /*padding: 5px;*/
+    /*margin-bottom: 10px;*/
+/*}*/
 
-#myCards {
-    text-align: center;
+/*#myCards {*/
+    /*text-align: center;*/
 
-    border-bottom: 2px solid #3f3f3f;
-    margin-bottom: 2em;
-}
+    /*border-bottom: 2px solid #3f3f3f;*/
+    /*margin-bottom: 2em;*/
+/*}*/
 
-#myCards .card {
-    border-bottom: 0;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
+/*#myCards .card {*/
+    /*border-bottom: 0;*/
+    /*border-bottom-right-radius: 0;*/
+    /*border-bottom-left-radius: 0;*/
 
-    -webkit-transition: all .1s;
-    transition: all .1s;
-}
+    /*-webkit-transition: all .1s;*/
+    /*transition: all .1s;*/
+/*}*/
 
-#myCards .card:hover {
-    padding-bottom: 10px;
-}
+/*#myCards .card:hover {*/
+    /*padding-bottom: 10px;*/
+/*}*/
 
-#myCards .cardSpacer {
-    height: 76px;
-    width: 0;
-    min-width: 0;
-    padding: 0;
-    margin: 0;
-    border: 0;
-}
+/*#myCards .cardSpacer {*/
+    /*height: 76px;*/
+    /*width: 0;*/
+    /*min-width: 0;*/
+    /*padding: 0;*/
+    /*margin: 0;*/
+    /*border: 0;*/
+/*}*/
 
-#actions {
-    text-align: center;
-}
+/*#actions {*/
+    /*text-align: center;*/
+/*}*/

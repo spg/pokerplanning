@@ -1,0 +1,85 @@
+<link rel="import" href="packages/polymer/polymer.html">
+
+<polymer-element name="card-component">
+    <template>
+        <style>
+            button {
+                background-color: #fff;
+                color: #3f3f3f;
+
+                display: inline-block;
+                padding: 10px !important;
+                border: 1px solid #3f3f3f;
+                border-radius: 3px;
+
+                -webkit-transition: all .2s;
+                transition: all .2s;
+            }
+
+            button:hover {
+                background-color: #3f3f3f;
+                color: #fff;
+            }
+
+            h3 {
+                background-color: #3f3f3f;
+                color: #fff;
+
+                padding: 5px;
+                margin-bottom: 10px;
+                margin-top: 0;
+            }
+
+            .cardContainer {
+                vertical-align: bottom;
+
+                display: inline-block;
+            }
+
+            .card {
+                font-size: 2em;
+                line-height: 65px;
+                text-align: center;
+
+                min-width: 50px;
+                height: 65px;
+                margin: 0;
+                padding-left: 3px;
+                padding-right: 3px;
+                border: solid black 1px;
+                -moz-user-select: none;
+                -webkit-user-select: none;
+                -ms-user-select: none;
+                -webkit-box-sizing: content-box;
+                -moz-box-sizing: content-box;
+                box-sizing: content-box;
+
+                border-radius: 5px 5px 0 0;
+                border-bottom: 0;
+
+            }
+
+            .card:hover {
+                background-color: #3f3f3f;
+                color: #fff;
+
+                cursor: pointer;
+            }
+
+            .selected {
+                background-color: #3f3f3f;
+                color: #fff;
+            }
+        </style>
+            <template bind>
+                <div class="root cardContainer" on-click="{{ superClick }}">
+                    <div id="{{playerName}}" class="card">
+                        3
+                    </div>
+                    <h3>{{ playerName }}</h3>
+                    <button>Kick this player</button>
+                </div>
+            </template>
+    </template>
+    <script type="application/dart" src="card_component.dart"></script>
+</polymer-element>

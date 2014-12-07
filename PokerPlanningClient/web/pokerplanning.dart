@@ -1,6 +1,7 @@
 import 'dart:html';
 import 'dart:convert';
 import 'card.dart';
+import 'card_component.dart';
 
 import 'package:dart_config/default_browser.dart';
 import 'package:polymer/polymer.dart';
@@ -191,7 +192,9 @@ void displayCards(Map game, bool revealed) {
       cardWidget.setSelected(card != "");
     }
 
+
     othersCardDiv.append(cardWidget.root);
+    othersCardDiv.append(new CardComponent("joel"));
   });
 }
 
@@ -200,7 +203,9 @@ void sendSocketMsg(Object jsObject) {
 }
 
 void kickPlayer(String player) {
-  sendSocketMsg({"kicked" : player});
+  sendSocketMsg({
+      "kicked" : player
+  });
 }
 
 void handleKick(Map kick) {
