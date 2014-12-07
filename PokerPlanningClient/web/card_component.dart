@@ -9,11 +9,51 @@ class CardComponent extends PolymerElement {
   @published
   String playerName;
   @published
+  String valueToDisplay;
+  @published
   bool revealed;
 
-  CardComponent.created() : super.created();
+  void set value(String newValue) {
+    _value = newValue;
+    valueToDisplay = revealed ? _value : "...";
+  }
 
-  factory CardComponent(String playerName) =>
-  (new Element.tag("card-component") as CardComponent)
-    ..playerName = playerName;
+  String get value => _value;
+
+  String _value;
+  var _kickHandler;
+  ButtonElement _kickButton;
+  DivElement _cardDiv;
+
+  CardComponent.created() : super.created() {
+  }
+
+  factory CardComponent.revealCard(String playerName, String value, bool revealed, kickHandler) {
+    CardComponent component = (new Element.tag("card-component") as CardComponent)
+      ..playerName = playerName
+      ..revealed = revealed
+      .._value = value
+      .._value = value
+      .._kickHandler = kickHandler;
+
+    return component;
+  }
+
+  void attached() {
+    super.attached();
+
+    _cardDiv = $["card"];
+    setSelected();
+
+    _kickButton = $["kickPlayer"]
+      ..onClick.listen((e) => _kickHandler(playerName));
+  }
+
+  void setSelected() {
+    _cardDiv.classes.toggle("selected", revealed ? false : value != "");
+  }
+
+  void selectCard(Event e) {
+    _cardDiv.classes.toggle("selected");
+  }
 }

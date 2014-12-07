@@ -182,19 +182,12 @@ void handleMessage(data) {
 void displayCards(Map game, bool revealed) {
   print("display cards with revealed : $revealed");
 
-  var othersCardDiv = querySelector("#othersCards");
-  othersCardDiv.innerHtml = "<div class=\"player\"></div>";
+  var othersCardDiv = querySelector("#othersCards")
+    ..innerHtml = "";
 
   game.forEach((player, card) {
-    Card cardWidget = new Card.revealCard(player, revealed ? card : "...", kickPlayer);
-
-    if (!revealed) {
-      cardWidget.setSelected(card != "");
-    }
-
-
-    othersCardDiv.append(cardWidget.root);
-    othersCardDiv.append(new CardComponent("joel"));
+    CardComponent cardWidget = new CardComponent.revealCard(player, card, revealed, kickPlayer);
+    othersCardDiv.append(cardWidget);
   });
 }
 
