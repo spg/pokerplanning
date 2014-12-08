@@ -74,15 +74,10 @@
         <template bind>
             <div class="cardContainer">
                 <div id="card">
-                <template if="{{revealed}}">
                     {{valueToDisplay}}
-                </template>
-                <template if="{{!revealed}}">
-                    ...
-                </template>
-            </div>
-            <h3>{{playerName}}</h3>
-            <button id="kickPlayer">Kick this player</button>
+                </div>
+                <h3>{{playerName}}</h3>
+                <button id="kickPlayer">Kick this player</button>
             </div>
         </template>
     </template>
