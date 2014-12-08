@@ -6,6 +6,9 @@
 
     <title>Poker Planning</title>
 
+    <link rel="import" href="packages/polymer/polymer.html">
+    <link rel="import" href="card_component.html">
+
     <script async type="application/dart" src="pokerplanning.dart"></script>
     <script async src="packages/browser/dart.js"></script>
 
@@ -15,48 +18,47 @@
 </head>
 <body>
 
-    <header>
-        <div class="container">
-            
-            <h1>P<strong>o</strong>ker<span>Planning</span></h1>
-
-            <div class="hidden" id="loggedIn">
-                You are logged in as <strong id="nameSpan"></strong>
-            </div>
-
-        </div>
-    </header>
-
+<header>
     <div class="container">
-        
-        <div id="error"></div>
-        
-        <div id="login">
-            <p>Please sign in</p>
-        
-            <label for="nameInput">Name:<input id="nameInput"></label>
-            <button id="loginButton">Sign in</button>
+
+        <h1>P<strong>o</strong>ker<span>Planning</span></h1>
+
+        <div class="hidden" id="loggedIn">
+            You are logged in as <strong id="nameSpan"></strong>
         </div>
-        
-        <div class="hidden" id="game">
-        
-            <h2>Others cards</h2>
-        
-            <div id="othersCards"></div>
-        
-            <h2>My cards</h2>
-        
-            <div id="myCards"></div>
-        
-            <div id="actions">
-                <button id="revealOthersCards">Reveal others' cards</button>
-                <button id="reset">Reset</button>
-            </div>
-        
-        </div>
-        
-        <div id="output"></div>
+
+    </div>
+</header>
+
+<div class="container" unresolved>
+
+    <div id="error"></div>
+
+    <div id="login">
+        <p>Please sign in</p>
+
+        <label for="nameInput">Name:<input id="nameInput"></label>
+        <button id="loginButton">Sign in</button>
     </div>
 
+    <div class="hidden" id="game">
+
+        <h2>Others cards</h2>
+
+        <div id="othersCards">
+        </div>
+
+        <h2>My cards</h2>
+
+        <div id="myCards"></div>
+
+        <div id="actions">
+            <button id="revealOthersCards">Reveal others' cards</button>
+            <button id="reset">Reset</button>
+        </div>
+
+    </div>
+    <div id="output"></div>
+</div>
 </body>
 </html>

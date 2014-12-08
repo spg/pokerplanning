@@ -1,8 +1,10 @@
 import 'dart:html';
 import 'dart:convert';
 import 'card.dart';
+import 'card_component.dart';
 
 import 'package:dart_config/default_browser.dart';
+import 'package:polymer/polymer.dart';
 
 Map<String, String> players = {
 };
@@ -18,6 +20,8 @@ void set myName(String newName) {
 }
 
 void main() {
+  initPolymer();
+
   loadConfig()
   .then((Map config) {
     hostname = config["hostname"];
@@ -178,17 +182,12 @@ void handleMessage(data) {
 void displayCards(Map game, bool revealed) {
   print("display cards with revealed : $revealed");
 
-  var othersCardDiv = querySelector("#othersCards");
-  othersCardDiv.innerHtml = "<div class=\"player\"></div>";
+  var othersCardDiv = querySelector("#othersCards")
+    ..innerHtml = "";
 
   game.forEach((player, card) {
-    Card cardWidget = new Card.revealCard(player, revealed ? card : "...", kickPlayer);
-
-    if (!revealed) {
-      cardWidget.setSelected(card != "");
-    }
-
-    othersCardDiv.append(cardWidget.root);
+    CardComponent cardComponent = new CardComponent.revealCard(player, card, revealed, kickPlayer);
+    othersCardDiv.append(cardComponent);
   });
 }
 
@@ -197,7 +196,9 @@ void sendSocketMsg(Object jsObject) {
 }
 
 void kickPlayer(String player) {
-  sendSocketMsg({"kicked" : player});
+  sendSocketMsg({
+      "kicked" : player
+  });
 }
 
 void handleKick(Map kick) {
