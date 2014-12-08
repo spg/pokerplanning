@@ -43,30 +43,6 @@ h2 {
     margin-bottom: 1em;
 }
 
-h3 {
-    background-color: #3f3f3f;
-    color: #fff;
-    font-size: 400;
-}
-
-button {
-    background-color: #fff;
-    color: #3f3f3f;
-
-    display: inline-block;
-    padding: 10px !important;
-    border: 1px solid #3f3f3f;
-    border-radius: 3px;
-
-    -webkit-transition: all .2s;
-    transition: all .2s;
-}
-
-button:hover {
-    background-color: #3f3f3f;
-    color: #fff;
-}
-
 .hidden {
     display: none;
 }
@@ -147,23 +123,6 @@ header {
     text-align: center;
 
     margin-bottom: 2em;
-}
-
-#othersCards > div {
-    margin: 0 10px;
-}
-
-#othersCards > div .card {
-    margin: 0;
-
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    border-bottom: 0;
-}
-
-#othersCards > div h3 {
-    padding: 5px;
-    margin-bottom: 10px;
 }
 
 #myCards {
