@@ -4,6 +4,8 @@ dependencies:
   browser: any
   dart_config: any
   polymer: ">=0.15.1 <0.16.0"
+dev_dependencies:
+  unittest: any
 transformers:
 - polymer:
     entry_points: web/index.html

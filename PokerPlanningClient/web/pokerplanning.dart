@@ -1,3 +1,5 @@
+library poker_planning;
+
 import 'dart:html';
 import 'dart:convert';
 import 'card.dart';
