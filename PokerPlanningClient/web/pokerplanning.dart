@@ -186,8 +186,8 @@ void displayCards(Map game, bool revealed) {
     ..innerHtml = "";
 
   game.forEach((player, card) {
-    CardComponent cardWidget = new CardComponent.revealCard(player, card, revealed, kickPlayer);
-    othersCardDiv.append(cardWidget);
+    CardComponent cardComponent = new CardComponent.revealCard(player, card, revealed, kickPlayer);
+    othersCardDiv.append(cardComponent);
   });
 }
 
